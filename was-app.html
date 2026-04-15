@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <link rel="icon" href="/favicon.ico" />
+    <title>Teaching-Center</title>
+    <link rel="stylesheet" href="design.css" />
+  </head>
+  <style>
+    /**/
+
+     body{
+       display:flex;
+       flex-direction:column;
+       justify-content:center;
+       align-items:center;
+       max-width:400px;
+       max-height:400px;
+       background:#222;
+       margin:0 auto;
+       text-align:center;
+     }
+    a {
+      text-decoration: none;
+    }
+    button:hover{
+      text-shadow:2px 3px 4px #000;
+    }
+    input,textarea{
+      color:lightgreen;
+      text-shadow:2px 3px 4px darkgreen;
+      line-height:120px;
+    }
+    input[type="text"]:focus,textarea:focus{
+      font-size:30px !important;
+      padding:2px !important;
+      padding-left:50px !important;
+      
+    }
+    input:hover,textarea:hover{
+      text-shadow:2px 3px 4px lightgreen;
+      color:#222;
+    }
+    textarea{
+      width:100%;
+      resize:none;
+      height:80px;
+    }
+  </style>
+  <body>
+    <div
+      class="bg-dark m-0 p-0 pt-5 pb-5 justify-content-center align-items-center "
+    >
+      <div class="bg-dark">
+        <input
+          type="text"
+          id="g-input"
+          class="form-control bg-success  fw-bold fs-5  m-2 mb-1"
+          placeholder="TYPE LIKE :201557389997"
+        />
+        <button
+          id="create"
+          class="form-control text-danger fw-bold fs-5 btn btn-outline-success m-2 p-2 mb-1 mt-1 hover-overlay hover-zoom hover-shadow"
+        >
+          CREATE YOUR WHATSAPP LINK
+        </button>
+        <div
+          class="container bg-success text-light w-100 p-2 m-2 fs-3 fw-bold mt-1"
+          id="mylinker"
+        ></div>
+      </div>
+
+      <div class="container w-75 h-20">
+        <img
+          src="https://www.bookingnear.com/storage/blog/large_img-worlds-dubai.jpg"
+          class="w-25 opacity-0"
+          alt="not"
+        />
+      </div>
+    </div>
+    <script>
+      let txtInput = document.createElement("textarea");// from input to textarea
+      let generator = document.getElementById("g-input");
+      let generatorBtn = document.getElementById("create");
+      let generatorLinker = document.getElementById("mylinker");
+      let mylink = document.createElement("a");
+      let msg = "Hello, My friend!";
+      generator.onchange = () => {
+        
+        //mylink.href = `https://wa.me/${generator.value}`;
+             generatorLinker.appendChild(txtInput);
+            
+            //mylink.href = `https://api.whatsapp.com/send/?phone=${generator.value}&text=${msg}&type=phone_number&app_absent=0`;
+            txtInput.oninput =()=> {
+           
+            mylink.textContent = `go to my whatsapp link`;
+            mylink.target = "_blank";
+              if(txtInput.value !==''){
+                msg = txtInput.value;
+                mylink.href = `https://api.whatsapp.com/send/?phone=${generator.value}&text=${msg}&type=phone_number&app_absent=0`;
+              }else{
+                msg ='Hello, my dear friend!';
+                mylink.href = `https://api.whatsapp.com/send/?phone=${generator.value}&text=${msg}&type=phone_number&app_absent=0`;
+              }
+   
+            mylink.className = `fs-1 form-control bg-dark text-light tw-bold`;
+            }
+        mylink.onclick = () => {
+          generatorLinker.innerHTML = "";
+          generator.value = "";
+        };
+      };
+
+      generatorBtn.onclick = () => {
+        if (generator.value !== "") {
+          if (!isNaN(generator.value)) {
+       
+            generatorLinker.appendChild(mylink);
+            //generator.value = "";
+          } else {
+            generator.value = "";
+          }
+        } else {
+          generator.value = "";
+        }
+      };
+//getElementsByTagName
+    
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+        const allEl = document.getElementsByTagName("input");
+      for (let i = 0; i < allEl.length; i++) {
+        let el = allEl[i];
+         
+            el.onfocus =()=>{
+           
+            el.placeholder ="";
+            console.log(" worked code on focus");
+          }
+        /////
+        el.addEventListener("focusout", () => {
+            el.placeholder ="TYPE LIKE :201557389997";
+            console.log(" worked code on unfocus");
+        });
+
+
+        /////
+      }
+    
+      
+    </script>
+  </body>
+</html>

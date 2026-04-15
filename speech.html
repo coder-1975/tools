@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SPEECH</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        outline: none;
+      }
+
+      :root {
+        --bg-color: rgba(15, 15, 15, 0.945);
+        --b-color: rgb(15, 15, 15);
+      }
+
+      body {
+        background-color: rgba(78, 75, 80, 0.56);
+        /*background-color: var(--bg-color);*/
+      }
+
+      .main {
+        display: flex;
+        font-family: sans-serif;
+        direction: rtl;
+        padding: 2px;
+        margin: 120px auto;
+        border-radius: 10px;
+        width: 350px;
+        font-size: 13px;
+      }
+
+      .controls {
+        font-family: sans-serif;
+        direction: rtl;
+        padding: 5px 4px;
+        border-left:inset 8px dotted rgba(222, 222, 222, 0.76);
+        border-radius: 10px;
+        border-top-left-radius: 0px;
+        border-bottom-left-radius: 0px;
+        margin-left: 2px;
+        width: 250px;
+        background-color:#428d7f;
+
+        h3 {
+          color: #123;
+          text-shadow: 1px 2px 3px #999ccc;
+        }
+      }
+
+      #voiceSelect {
+        width: 100%;
+        margin-bottom: 5px;
+        background-color: #332f2f;
+        color: #28a745;
+      }
+
+      #voiceSelect::-webkit-scrollbar {
+        background-color: #28a745;
+        display: none;
+      }
+
+      input[type="range"] {
+        width: 100%;
+        color: #28a745;
+      }
+
+      input[type="range"] {
+        overflow: hidden;
+        appearance: none;
+        background: linear-gradient(
+          to left,
+          #9c8e67 0%,
+          #9c8e67 50%,
+          #9e998b 50%,
+          #a19f9c 100%
+        );
+      }
+
+      input[type="range"]::-webkit-slider-thumb {
+        width: 12px;
+        appearance: none;
+        height: 12px;
+        background: black;
+        border-left:1px solid lightgrey;
+        border-right:1px solid lightgreen;
+        border-top:1px solid gold;
+        border-bottom:1px solid #bdb76b;
+        border-radius: 2px;
+        cursor: grab;
+      }
+
+      input[type="button"] {
+        visibility: hidden;
+        width: 80px;
+        appearance: none;
+        height: 22px;
+        background: black;
+        border-radius: 2px;
+        cursor: grab;
+        color: gold;
+        border: 1px solid #555151;
+      }
+
+      #talk {
+        box-shadow: -2px 2px 2px 2px rgba(43, 27, 40, 0.534);
+        transition: 0.5s;
+      }
+
+      #talk:hover {
+        box-shadow: -1px 1px 1px 1px rgba(43, 27, 40, 0.534);
+        transition: 0.3s;
+      }
+
+      #stop {
+        margin-top: 10px;
+        background: rgb(17, 28, 32);
+        border-radius: 2px;
+        cursor: grab;
+        color: rgb(255, 0, 55);
+      }
+
+      #stop:hover {
+        color: rgb(255, 0, 0);
+        border: 1px solid rgb(255, 0, 0);
+      }
+
+      input[type="button"]:hover {
+        width: 80px;
+        appearance: none;
+        height: 22px;
+        background: rgb(51, 50, 50);
+        border-radius: 2px;
+        cursor: grab;
+        color: rgb(255, 0, 119);
+        border: 1px solid rgb(255, 0, 119);
+      }
+
+      .speechBox {
+        font-family: sans-serif;
+        direction: ltr;
+        text-align:left;
+        padding: 14px;
+        border: 1px solid #ccc;
+        border: 0.1px solid #ccccccc2;
+        border-radius: 10px;
+        border-top-right-radius: 0px;
+        border-bottom-right-radius: 0px;
+        width: 350px;
+        background-color: #3a6e4675;
+      }
+
+      #textInput {
+        resize: none;
+        background-image: url(backLines.jpg);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-origin: padding-box;
+        color: #080808;
+        width: 200px;
+        padding: 20px 17px;
+        height: 200px;
+        text-align: left;
+        font-size: 19px;
+        font-weight: 900;
+        margin-bottom: 10px;
+        border: 5px solid var(--b-color);
+        line-height: 30px;
+      }
+
+      #textInput::first-line {
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-decoration: underline;
+        color: #fd2929;
+      }
+
+      #textInput::-webkit-scrollbar {
+        background-color: #28a745;
+        display: none;
+      }
+
+      .speakBtn {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+        background: linear-gradient(
+          to left,
+          rgb(46, 10, 10),
+          rgb(5, 5, 36),
+          rgb(5, 22, 5)
+        );
+        border: 5px double var(--b-color);
+        font-size: 22px;
+      }
+
+      .speakBtn:hover {
+        width: 100%;
+        padding: 10px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 10px;
+        background: linear-gradient(
+          to left,
+          rgb(5, 22, 5),
+          rgb(5, 5, 36),
+          rgb(46, 10, 10)
+        );
+        border: 5px double rgb(33, 61, 40);
+      }
+
+      span {
+        display: block;
+        color: white;
+        min-width: 80%;
+        background: linear-gradient(
+          44deg,
+          white,
+          transparent,
+          rgba(155, 100, 0, 0.685),
+          rgba(0, 128, 100, 0.801),
+          rgba(100, 0, 155, 0.924),
+           transparent,
+            transparent,
+          white
+        );
+        margin: 3px;
+        padding: 3px;
+      }
+
+      fieldset {
+        background-color: #27191e;
+        border: 1px solid #b94e90c0;
+        color: #070707;
+        margin-top: 12px;
+      }
+
+      legend {
+        background-color: #c2a2b6;
+        min-width: 100%;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 1px 1px 5px 2px #00000085;
+      }
+
+      .ordersBox {
+        display: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="main">
+      <div class="controls">
+        <h3 title="(JS)">SETTINGS</h3>
+        <fieldset>
+          <legend>VOICES</legend>
+          <select id="voiceSelect"></select>
+        </fieldset>
+
+        <fieldset>
+          <legend>حدة</legend>
+          <span id="pitchVal">0.9</span>
+          <input id="pitch" />
+        </fieldset>
+
+        <fieldset>
+          <legend>سرعة</legend>
+          <span id="rateVal">1.2</span>
+          <input id="rate" />
+        </fieldset>
+
+        <fieldset>
+          <legend>درجة</legend>
+          <span id="volVal"></span>
+          <input id="vol" />
+        </fieldset>
+
+        <fieldset>
+          <legend>Controls</legend>
+          <input type="button" onclick="start()" value="TALK" id="talk" />
+
+          <input type="button" onclick="clearit()" value="CLEAR" id="stop" />
+        </fieldset>
+      </div>
+      <div class="speechBox">
+        <textarea dir="ltr" onselect="speak()" type="text" id="textInput">
+        </textarea>
+        <button class="speakBtn" onclick="speak()" id="startSpeaking">
+          تشغيل الصوت 🔊
+        </button>
+      </div>
+      <div class="ordersBox">
+        <textarea dir="ltr" onselect="speak()" type="text" id="ordersInput">
+        </textarea>
+      </div>
+    </div>
+    <script>
+      let CURRENTORDERs = "Stop speaking";
+      let CURRENTORDERv = "Higher volume";
+      let CURRENTORDERr = "Lower speed";
+      let CURRENTORDERp = "Lower hardness";
+
+      const textInput = document.querySelector("#textInput");
+      const ordersInput = document.querySelector("#ordersInput");
+      const synth = window.speechSynthesis;
+      const voiceSelect = document.querySelector("#voiceSelect");
+      const pitch = document.querySelector("#pitch");
+      const pitchSpan = document.querySelector("#pitchVal");
+      const rate = document.querySelector("#rate");
+      const rateSpan = document.querySelector("#rateVal");
+      const vol = document.querySelector("#vol");
+      const volSpan = document.querySelector("#volVal");
+
+      let myorders = document.getElementById("ordersInput");
+      let mywords = document.getElementById("textInput");
+      let voices = [];
+
+      pitch.type = "range";
+      pitch.min = "0";
+      pitch.max = "2";
+      pitch.step = "0.1";
+      //pitch.value = "0.9";
+      switch (CURRENTORDERp) {
+        case "Lower hardness":
+          pitch.value = "1";
+          pitchSpan.innerHTML = "1";
+          break;
+        case "Higher hardness":
+          pitch.value = "2";
+          pitchSpan.innerHTML = "2";
+          break;
+        case "Zero hardness":
+          pitch.value = "0";
+          pitchSpan.innerHTML = "0";
+          break;
+        default:
+          break;
+      }
+
+      rate.type = "range";
+      rate.min = "0.5";
+      rate.max = "2";
+      rate.step = "0.1";
+      //rate.value = "1.2";
+      switch (CURRENTORDERr) {
+        case "Lower speed":
+          rate.value = "1";
+          rateSpan.innerHTML = "1";
+          break;
+        case "Higher speed":
+          rate.value = "2";
+          rateSpan.innerHTML = "2";
+          break;
+        case "Zero speed":
+          rate.value = "0.5";
+          rateSpan.innerHTML = "0.5";
+          break;
+        default:
+          break;
+      }
+
+      vol.type = "range";
+      vol.min = "0.0";
+      vol.max = "1";
+      vol.step = "0.1";
+
+      switch (CURRENTORDERv) {
+        case "Lower volume":
+          vol.value = "0.5";
+          volSpan.innerHTML = "0.5";
+          break;
+        case "Higher volume":
+          vol.value = "1";
+          volSpan.innerHTML = "1";
+          break;
+        case "Zero volume":
+          vol.value = "0";
+          volSpan.innerHTML = "0";
+          break;
+      }
+
+
+      Object.defineProperty(String.prototype, "cap", {
+        value: function () {
+          return this.charAt(0).toUpperCase() + this.slice(1);
+        },
+        enumerable: false,
+      });
+
+      const recognition = new (
+        window.SpeechRecognition || window.webkitSpeechRecognition
+      )();
+      recognition.onresult = (event) => {
+        //console.log(event.results[0][0].transcript);
+
+        let words = event.results[0][0].transcript.cap();
+        if (
+          words.startsWith("Edit voice") ||
+          words.startsWith("Lower volume") ||
+          words.startsWith("Higher volume") ||
+          words.startsWith("Zero volume") ||
+          words.startsWith("0 volume") ||
+          words.startsWith("Lower speed") ||
+          words.startsWith("Higher speed") ||
+          words.startsWith("Zero speed") ||
+          words.startsWith("0 speed") ||
+          words.startsWith("Lower hardness") ||
+          words.startsWith("Higher hardness") ||
+          words.startsWith("Zero hardness") ||
+          words.startsWith("0 hardness") ||
+          words.startsWith("Start speaking") ||
+          words.startsWith("Stop it") ||
+          words.startsWith("Remove it")
+        ) {
+          ordersInput.focus();
+          myorders.value = words;
+          switch (words) {
+            case "Start speaking":
+              document.getElementById("startSpeaking").click();
+              //document.getElementById("startSpeaking").onclick = () => recognition.start();
+              setInterval(()=>{
+              //document.querySelector(".ordersBox").style.display="block";
+              document.getElementById("talk").click();
+              document.getElementById("talk").onclick = () => start();
+              },3000);
+              break;
+              case "Stop it":
+              //document.querySelector(".ordersBox").style.display="block";
+              document.getElementById("stop").click();
+              document.getElementById("stop").onclick = () => clearit();
+              break;
+              case "Remove it":
+              //document.querySelector(".ordersBox").style.display="block";
+              document.getElementById("stop").click();
+              document.getElementById("stop").onclick = () => clearit();
+              document.getElementById("textInput").value="";
+              break;
+            case "Higher volume":
+              CURRENTORDERv = "Higher volume";
+              vol.value = "1";
+              volSpan.innerHTML = "1";
+              break;
+            case "Lower volume":
+              CURRENTORDERv = "Lower volume";
+              vol.value = "0.5";
+              volSpan.innerHTML = "0.5";
+              break;
+            case "Zero volume":
+              CURRENTORDERv = "Zero volume";
+              vol.value = "0";
+              volSpan.innerHTML = "0";
+              break;
+            case "0 volume":
+              CURRENTORDERv = "Zero volume";
+              vol.value = "0";
+              volSpan.innerHTML = "0";
+              break;
+
+            case "Higher speed":
+              CURRENTORDERr = "Higher speed";
+              rate.value = "2";
+              rateSpan.innerHTML = "2";
+              break;
+            case "Lower speed":
+              CURRENTORDERr = "Lower speed";
+
+              rate.value = "1";
+              rateSpan.innerHTML = "1";
+              break;
+            case "Zero speed":
+              CURRENTORDERr = "Zero speed";
+              rate.value = "0.5";
+              rateSpan.innerHTML = "0.5";
+              break;
+            case "0 speed":
+              CURRENTORDERr = "Zero speed";
+              rate.value = "0.5";
+              rateSpan.innerHTML = "0.5";
+              break;
+
+            case "Higher hardness":
+              CURRENTORDERp = "Higher hardness";
+              pitch.value = "2";
+              pitchSpan.innerHTML = "2";
+              break;
+            case "Lower hardness":
+              CURRENTORDERp = "Lower hardness";
+
+              pitch.value = "1";
+              pitchSpan.innerHTML = "1";
+              break;
+            case "Zero hardness":
+              CURRENTORDERp = "Zero hardness";
+              pitch.value = "0.5";
+              pitchSpan.innerHTML = "0.5";
+              break;
+            case "0 hardness":
+              CURRENTORDERp = "Zero hardness";
+              pitch.value = "0";
+              pitchSpan.innerHTML = "0";
+              break;
+            case "Start speaking":
+              CURRENTORDERs = "Start speaking";
+              break;
+            default:
+              break;
+          }
+        } else {
+          textInput.focus();
+          textInput.lang="en";
+          if (
+            words.startsWith("What") ||
+            words.startsWith("When") ||
+            words.startsWith("Who") ||
+            words.startsWith("Where") ||
+            words.startsWith("How") ||
+            words.startsWith("Can") ||
+            words.startsWith("Could") ||
+            words.startsWith("Should") ||
+            words.startsWith("Would") ||
+            words.startsWith("Will") ||
+            words.startsWith("May")
+          ) {
+            mywords.value += words + `? \n`;
+          } else {
+            mywords.value += words + `. \n`;
+          }
+        }
+      };
+      function start() {
+        recognition.start();
+        document.getElementById("stop").style.visibility !== "visible"
+          ? (document.getElementById("stop").style.visibility = "visible")
+          : (document.getElementById("stop").style.visibility = "visible");
+      }
+    </script>
+    <script>
+      // 1. تعبئة قائمة الأصوات المتاحة
+      function populateVoices() {
+        voices = synth.getVoices();
+        //voices = voices.filter(voice=> voice.lang.startsWith('en-US')); // new code to let just eng to be spoken
+        voiceSelect.innerHTML = "";
+        // .slice(0, 0)
+        voices.forEach((voice) => {
+          const option = document.createElement("option");
+          //option.textContent = `${voice.name.slice(0, 0)} (${voice.lang})`;
+           option.textContent = `${voice.name} (${voice.lang})`;
+          option.setAttribute("data-name", voice.name);
+          voiceSelect.appendChild(option);
+        });
+      }
+
+      // تحديث الأصوات عند التحميل (للمتصفحات المختلفة)
+      //populateVoices();
+      speechSynthesis.onvoiceschanged = populateVoices;
+      if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = populateVoices;
+      }
+
+      // 2. تحديث الأرقام الظاهرة بجانب المنزلقات
+      pitch.oninput = () =>
+        (document.querySelector("#pitchVal").textContent = pitch.value);
+      rate.oninput = () =>
+        (document.querySelector("#rateVal").textContent = rate.value);
+      vol.oninput = () =>
+        (document.querySelector("#volVal").textContent = vol.value);
+      const getRandomNumber = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min);
+      };
+      let rnd = getRandomNumber(0, 3);
+      let list = ["Speak more", "Start talking", "Magic text"];
+      textInput.value = list[rnd];
+      // 3. وظيفة النطق الأساسية
+      function speak() {
+        if (synth.speaking) {
+          synth.cancel();
+        } // إيقاف أي نطق حالي قبل البدء
+
+        if (textInput.value !== "") {
+          const utterThis = new SpeechSynthesisUtterance(textInput.value);
+
+          // تطبيق الصوت المختار
+          const selectedVoiceName =
+            voiceSelect.selectedOptions[0].getAttribute("data-name");
+         // utterThis.voice = voices.find((v) => v.name === selectedVoiceName);*/
+         ///////////////////////////////////// new code
+          const selectedVoice = voices.find( 
+                (v) => v.name === selectedVoiceName
+          );
+
+          if (selectedVoice) {
+            utterThis.voice = selectedVoice;
+          } else {
+            utterThis.voice = voices[0]; // fallback
+          } 
+           //////////////////////////////// end new code 
+
+          // تطبيق الإعدادات (الحدة والسرعة)
+          utterThis.pitch = pitch.value;
+          utterThis.rate = rate.value;
+          if (
+            //utterThis.text.indexOf(list)
+            list.some((key) => utterThis.text.includes(key))
+          ) {
+            utterThis.volume = 0.1;
+            //textInput.value = " \n";
+            // Add period of time befire this action
+            setTimeout(() => {
+              textInput.value = "";
+            }, 50);
+            textInput.focus();
+            start();
+            document.getElementById("talk").style.visibility !== "visible"
+              ? (document.getElementById("talk").style.visibility = "visible")
+              : (document.getElementById("talk").style.visibility = "visible");
+          } else {
+            utterThis.volume = vol.value;
+          }
+          
+          synth.speak(utterThis);
+        }
+      }
+
+      // make animation to the slider
+
+      function clearit() {
+        //recognition.cancel();
+        textInput.value = "";
+        rnd = getRandomNumber(0, 3);
+        list = ["Speak more", "Start talking", "Magic text"];
+        textInput.value = list[rnd];
+        document.getElementById("talk").style.visibility === "visible"
+          ? (document.getElementById("talk").style.visibility = "hidden")
+          : (document.getElementById("talk").style.visibility = "hidden");
+      }
+    </script>
+  </body>
+</html>

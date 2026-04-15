@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+  <head>
+    <title>YOUGLISH</title>
+    <style>
+      
+
+      @media (min-width: 320px) {
+        /* smartphones, iPhone, portrait 480x320 phones */
+        * {
+          overflow: hidden;
+          outline: none;
+          border: none;
+        }
+        body {
+          background-color: rgb(12, 12, 12);
+          padding: 7% 1%;
+        }
+        h2,
+        span {
+          width: 100%;
+          font-size: 3rem;
+          color: rgb(78, 77, 70);
+        }
+        div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+        }
+        input {
+          width: 85%;
+          height: 8%;
+          font-size: 3.5rem;
+          padding: 8px 0;
+          background-color: rgba(38, 65, 83, 0.699);
+        background-color: rgba(51, 49, 49, 0.568);
+          color:rgb(108, 129, 150) !important;
+        }
+        button {
+          width: 12%;
+          height: 80px;
+          font-size: 1.2rem;
+          color: rgb(163, 211, 223);
+          background-color: rgb(108, 138, 168);
+          border: 2px solid rgb(185, 211, 250);
+          box-shadow: 2px 6px 5px 3px #234;
+        
+        }
+        input {
+          box-shadow: -2px 1px 3px 1px #234;
+          border: 2px solid rgb(108, 129, 150);
+          
+
+          padding: 5px 1px;
+        }
+        button {
+          color: #456;
+          
+          border: 2px solid #011;
+          padding: 5px 1px;
+          box-shadow: 2px 6px 5px 3px #234;
+        }
+        button:hover {
+          background-color: rgba(0, 0, 0, 0.911);
+          box-shadow: 1px 1px 1px 1px #234;
+          color: rgb(108, 129, 150);
+          cursor: pointer;
+          border: 2px solid rgb(108, 129, 150);
+        }
+       
+      }
+      @media (min-width: 481px) {
+        /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+      }
+      @media (min-width: 641px) {
+        /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+      }
+      @media (min-width: 961px) {
+        /* tablet, landscape iPad, lo-res laptops ands desktops */
+      }
+      @media (min-width: 1025px) {
+        /* big landscape tablets, laptops, and desktops */
+      }
+      @media (min-width: 1281px) {
+        /* hi-res laptops and desktops */
+        * {
+          overflow: hidden;
+          outline: none;
+          border: none;
+        }
+        body {
+          background-color: rgba(12, 23, 31, 0.856);
+          color: aliceblue;
+          padding: 12% 30%;
+        }
+         div{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2px;
+        }
+        h2,
+        span {
+          width: 100%;
+          font-size: 3rem;
+          color: rgb(221, 219, 210);
+        }
+        input {
+          width: 77%;
+          height: 8%;
+          font-size: 3.5rem;
+          padding: 8px;
+          background-color: rgba(38, 65, 83, 0.699);
+        }
+        button {
+          width: 30%;
+          height: 8%;
+          font-size: 3.5rem;
+          color: rgb(163, 211, 223);
+          background-color: rgb(23, 42, 61);
+          border: 2px solid rgb(185, 211, 250);
+          box-shadow: 2px 6px 5px 3px #234;
+          padding: 19px;
+        }
+        input {
+          box-shadow: -2px 1px 3px 1px #234;
+          border: 2px solid #012;
+          
+          color: white;
+          padding: 5px 1px;
+        }
+        button {
+          color: #456;
+          background-color: #012;
+          border: 2px solid #011;
+          padding: 5px 1px;
+          box-shadow: 2px 6px 5px 3px #234;
+        }
+        button:hover {
+          background-color: #001;
+          box-shadow: 1px 1px 1px 1px #234;
+          cursor: pointer;
+        }
+      }
+
+      
+        
+      
+    </style>
+  </head>
+  <body>
+    <h2>WORD: <span id="my-id">...</span></h2>
+    <div>
+      <input type="text" id="word-id" placeholder="Enter Word!" />
+      <button onclick="wordCall()">FIND</button><br /><br />
+    </div>
+    <script>
+      let wordInput = document.getElementById("word-id");
+      let link = "https://youglish.com/pronounce/co_dependant/english/us";
+      let start = "https://youglish.com/";
+      let end = "/english/us";
+      let word = "";
+      wordInput.onchange = () => {
+        word = wordInput.value;
+      };
+      if (word === "") {
+        wordInput.onchange = () => {
+          word = wordInput.value;
+        };
+      } else {
+      }
+      if (word !== "") {
+        link = `https://youglish.com/pronounce/${word}/english/us`;
+      } else {
+      }
+
+      function wordCall() {
+        if (word !== "") {
+          window.open(
+            `https://youglish.com/pronounce/${word}/english/us`,
+            "_blank",
+          );
+        } else {
+        }
+      }
+
+      addEventListener("keyup",(e)=>{
+        //
+        if(e.keyCode===13){
+           wordCall();
+        }
+      })
+    </script>
+  </body>
+</html>

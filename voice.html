@@ -1,0 +1,554 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Text To Speech</title>
+    <style>
+      * {
+        outline: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+      input[type="range"] {
+        width: 100%;
+        color: #28a745;
+      }
+      input[type="range"] {
+        overflow: hidden;
+        appearance: none;
+        background: #2e2327;
+        background: linear-gradient(
+          to left,
+          #2e2327 0%,
+          #2e2327 50%,
+          #554349 50%,
+          #a88391 100%
+        );
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        width: 8px;
+        appearance: none;
+        height: 12px;
+        background: black;
+        border-radius: 2px;
+        cursor: grab;
+      }
+      fieldset {
+        background-color: #27191e;
+        border: 1px solid #b94e90c0;
+        color: #070707;
+        margin-top: 12px;
+      }
+      legend {
+        background-color: #55384ac0;
+        min-width: 100%;
+        font-weight: bold;
+        text-align: center;
+        box-shadow: 1px 1px 5px 2px #00000085;
+      }
+      body {
+        /*
+background:linear-gradient(to left,
+rgba(2,0,0,0.1),
+rgba(0,2,0,0.4),
+rgba(0,0,2,0.5),
+rgba(2,2,2,0.6));
+*/
+        background: #222;
+        display: flex;
+        margin: 0 auto;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+      }
+      div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        background: linear-gradient(
+          45deg,
+          rgba(200, 200, 0, 0.3),
+          rgba(0, 200, 200, 0.4),
+          rgba(200, 0, 200, 0.5)
+        );
+
+        min-height: 470px;
+        min-width: 300px;
+        max-width: 300px;
+        width: 300px;
+        box-shadow: 5px 7px 10px 5px #000;
+      }
+
+      h1,
+      #control {
+        background: linear-gradient(
+          45deg,
+          rgba(200, 200, 0, 0.3),
+          rgba(0, 200, 200, 0.4),
+          rgba(200, 0, 200, 0.5)
+        );
+
+        min-height: 40px;
+        min-width: 300px;
+        max-width: 300px;
+        width: 300px;
+        border-top: 2px solid grey;
+        border-bottom: 2px solid grey;
+        color: grey;
+        text-shadow: 1px 1px 1px #000;
+      }
+
+      #control {
+        display: flex;
+        flex-direction: row;
+        background: linear-gradient(to bottom, #444, dimgrey, grey, lightgrey);
+
+        min-height: 30px;
+        min-width: 280px;
+        max-width: 280px;
+        width: 280px;
+        border-top: 2px solid dimgrey;
+        border-bottom: 16px solid #111;
+        color: grey;
+        text-shadow: 1px 1px 1px #000;
+        box-shadow: none;
+        transform: perspective(600px) rotateX(45deg);
+        margin-top: -12px !important;
+      }
+
+      select {
+        font-size: 15px;
+        display: flex;
+        flex-direction: row;
+        background: linear-gradient(to bottom, #444, dimgrey);
+
+        min-height: 20px;
+        min-width: 280px;
+        max-width: 280px;
+        width: 280px;
+        border-top: 2px solid dimgrey;
+        border-bottom: 1px solid #111;
+        color: grey;
+        text-shadow: 1px 1px 1px #000;
+        box-shadow: none;
+
+        margin-top: -12px !important;
+      }
+      option {
+        transform: perspective(600px) rotateX(45deg);
+      }
+
+      .selections {
+        min-height: 100px;
+        min-width: 280px;
+        max-width: 280px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: center;
+      }
+
+      textarea {
+        margin-top: 20px !important;
+        background: linear-gradient(
+          190deg,
+          rgba(20, 20, 0, 0.3),
+          rgba(0, 20, 20, 0.4),
+          rgba(20, 0, 20, 0.5)
+        );
+
+        min-height: 180px;
+        min-width: 260px;
+        max-width: 260px;
+        width: 260px;
+        border-top: 2px solid #222;
+        border-left: 2px solid #222;
+        border-bottom: 2px solid grey;
+        color: grey;
+        text-shadow: 1px 1px 1px #000;
+        resize: none;
+        font-size: 30px;
+      }
+
+      .btns {
+        text-shadow: 1px 1px 1px white !important;
+        background: linear-gradient(180deg, dimgrey, grey, grey, #123);
+        color: #000 !important;
+        font-size: 25px;
+        min-height: 70px;
+        min-width: 70px;
+        max-width: 70px;
+        width: 70px;
+        border: 1px solid lightgrey;
+        border-right: 1px solid #111;
+        border-top: 2px solid dimgrey;
+        border-bottom: 8px solid #111;
+        text-shadow: 1px 1px 1px #000;
+        box-shadow: none;
+        transform: perspective(500px) rotateX(30deg);
+
+        margin: 2px 4px;
+        transition: 1s;
+      }
+
+      .btns:hover {
+        background: linear-gradient(180deg, dimgrey, grey);
+        border-bottom: 1px solid #111;
+        transition: 0.3s;
+        cursor: pointer;
+      }
+      #ordersInput {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <textarea dir="ltr" onselect="speak()" type="text" id="ordersInput">
+    </textarea>
+    <div>
+      <h1>SPEECH</h1>
+      <textarea id="textInput">TEXTAREA</textarea>
+      <div id="control">
+        <button class="btns" onclick="speak()" id="startSpeaking">listen</button>
+        <button class="btns" onclick="start()" id="talk">speak</button>
+        <button class="btns" onclick="clearit()" id="stop">clear</button>
+      </div>
+      <div class="selections">
+        <select id="voiceSelect"></select>
+        <fieldset id="fset">
+          <legend id="leg"></legend>
+          <input type="range" name="PIT" id="pitch" />
+          <input type="range" name="RAT" id="rate" />
+          <input type="range" name="VOL" id="vol" />
+        </fieldset>
+      </div>
+    </div>
+    <!--    https://www.youtube.com/watch?v=3oDNqHZ7UKY   -->
+
+    <script>
+      let CURRENTORDERs = "Stop speaking";
+      let CURRENTORDERv = "Lower volume";
+      let CURRENTORDERr = "Lower speed";
+      let CURRENTORDERp = "Lower hardness";
+      const ordersInput = document.querySelector("#ordersInput");
+      let myorders = document.getElementById("ordersInput");
+      const pitch = document.querySelector("#pitch");
+
+      pitch.type = "range";
+      pitch.min = "0";
+      pitch.max = "2";
+      pitch.step = "0.1";
+      pitch.value = "0.5";
+
+      switch (CURRENTORDERp) {
+        case "Lower hardness":
+          pitch.value = "1";
+          leg.innerHTML = "PIT: 1";
+          break;
+        case "Higher hardness":
+          pitch.value = "2";
+          leg.innerHTML = "PIT: 2";
+          break;
+        case "Zero hardness":
+          pitch.value = "0";
+          leg.innerHTML = "PIT: 0";
+          break;
+        default:
+          break;
+      }
+
+      const rate = document.querySelector("#rate");
+
+      rate.type = "range";
+      rate.min = "0.5";
+      rate.max = "2";
+      rate.step = "0.1";
+      rate.value = "0.5";
+
+      switch (CURRENTORDERr) {
+        case "Lower speed":
+          rate.value = "1";
+          leg.innerHTML = "RAT: 1";
+          break;
+        case "Higher speed":
+          rate.value = "2";
+          leg.innerHTML = "RAT: 2";
+          break;
+        case "Zero speed":
+          rate.value = "0.5";
+          leg.innerHTML = "RAT: 0.5";
+          break;
+        default:
+          break;
+      }
+
+      const vol = document.querySelector("#vol");
+
+      vol.type = "range";
+      vol.min = "0.0";
+      vol.max = "1";
+      vol.step = "0.1";
+      vol.value = "0.5";
+
+      switch (CURRENTORDERv) {
+        case "Lower volume":
+          vol.value = "0.5";
+          leg.innerHTML = "VOL: 0.5";
+          break;
+        case "Higher volume":
+          vol.value = "1";
+          leg.innerHTML = "VOL: 1";
+          break;
+        case "Zero volume":
+          vol.value = "0";
+          leg.innerHTML = "VOL: 0";
+          break;
+      }
+
+      const textInput = document.querySelector("#textInput");
+      let txt = "VOICE SETTINGS";
+      leg.innerHTML = "VOL :" + vol.value;
+      Object.defineProperty(String.prototype, "cap", {
+        value: function () {
+          return this.charAt(0).toUpperCase() + this.slice(1);
+        },
+        enumerable: false,
+      });
+      let mywords = document.getElementById("textInput");
+      const recognition = new (
+        window.SpeechRecognition || window.webkitSpeechRecognition
+      )();
+      recognition.onresult = (event) => {
+        console.log(event.results[0][0].transcript);
+        textInput.focus();
+        let words = event.results[0][0].transcript.cap();
+        if (
+          words.startsWith("Edit voice") ||
+          words.startsWith("Lower volume") ||
+          words.startsWith("Higher volume") ||
+          words.startsWith("Zero volume") ||
+          words.startsWith("0 volume") ||
+          words.startsWith("Lower speed") ||
+          words.startsWith("Higher speed") ||
+          words.startsWith("Zero speed") ||
+          words.startsWith("0 speed") ||
+          words.startsWith("Lower hardness") ||
+          words.startsWith("Higher hardness") ||
+          words.startsWith("Zero hardness") ||
+          words.startsWith("0 hardness") ||
+          words.startsWith("Start speaking") ||
+          words.startsWith("Stop it") ||
+          words.startsWith("Remove it")
+        ) {
+          ordersInput.focus();
+          myorders.value = words;
+          switch (words) {
+            case "Start speaking":
+              document.getElementById("startSpeaking").click();
+              setInterval(() => {
+                document.getElementById("talk").click();
+                //document.getElementById("talk").onclick = () => start();
+              }, 3000);
+              break;
+            case "Stop it":
+              document.querySelector(".ordersBox").style.display = "block";
+              document.getElementById("stop").click();
+              document.getElementById("stop").onclick = () => clearit();
+              break;
+            case "Remove it":
+              //document.querySelector(".ordersBox").style.display = "block";
+              document.getElementById("stop").click();
+              document.getElementById("stop").onclick = () => clearit();
+              document.getElementById("textInput").value = "";
+              break;
+            case "Higher volume":
+              CURRENTORDERv = "Higher volume";
+              vol.value = "1";
+              leg.innerHTML = "VOL: 1";
+              break;
+            case "Lower volume":
+              CURRENTORDERv = "Lower volume";
+              vol.value = "0.5";
+              leg.innerHTML = "VOL: 0.5";
+              break;
+            case "Zero volume":
+              CURRENTORDERv = "Zero volume";
+              vol.value = "0";
+              leg.innerHTML = "VOL: 0";
+              break;
+            case "0 volume":
+              CURRENTORDERv = "Zero volume";
+              vol.value = "0";
+              leg.innerHTML = "VOL: 0";
+              break;
+
+            case "Higher speed":
+              CURRENTORDERr = "Higher speed";
+              rate.value = "2";
+              leg.innerHTML = "RAT: 0";
+              break;
+            case "Lower speed":
+              CURRENTORDERr = "Lower speed";
+
+              rate.value = "1";
+              leg.innerHTML = "RAT: 1";
+              break;
+            case "Zero speed":
+              CURRENTORDERr = "Zero speed";
+              rate.value = "0.5";
+              leg.innerHTML = "RAT: 0.5";
+              break;
+            case "0 speed":
+              CURRENTORDERr = "Zero speed";
+              rate.value = "0.5";
+              leg.innerHTML = "RAT: 0.5";
+              break;
+
+            case "Higher hardness":
+              CURRENTORDERp = "Higher hardness";
+              pitch.value = "2";
+              leg.innerHTML = "PIT: 2";
+              break;
+            case "Lower hardness":
+              CURRENTORDERp = "Lower hardness";
+
+              pitch.value = "1";
+              leg.innerHTML = "PIT: 1";
+              break;
+            case "Zero hardness":
+              CURRENTORDERp = "Zero hardness";
+              pitch.value = "0.5";
+              leg.innerHTML = "PIT: 0.5";
+              break;
+            case "0 hardness":
+              CURRENTORDERp = "Zero hardness";
+              pitch.value = "0.5";
+              leg.innerHTML = "PIT: 0.5";
+              break;
+            case "Start speaking":
+              CURRENTORDERs = "Start speaking";
+              break;
+            default:
+              break;
+          }
+        } else {
+          textInput.focus();
+
+          if (
+            words.startsWith("What") ||
+            words.startsWith("When") ||
+            words.startsWith("Who") ||
+            words.startsWith("Where") ||
+            words.startsWith("How") ||
+            words.startsWith("Can") ||
+            words.startsWith("Could") ||
+            words.startsWith("Should") ||
+            words.startsWith("Would") ||
+            words.startsWith("Will") ||
+            words.startsWith("May")
+          ) {
+            mywords.value += words + `? \n`;
+          } else {
+            mywords.value += words + `. \n`;
+          }
+        }
+      };
+      function start() {
+        recognition.start();
+      }
+    </script>
+    <script>
+      const synth = window.speechSynthesis;
+      const voiceSelect = document.querySelector("#voiceSelect");
+
+      let voices = [];
+
+      // 1. تعبئة قائمة الأصوات المتاحة
+      function populateVoices() {
+        voices = synth.getVoices();
+        voiceSelect.innerHTML = "";
+        // .slice(0, 0)
+        voices.forEach((voice) => {
+          const option = document.createElement("option");
+          option.textContent = `${voice.name.slice(0, 0)} (${voice.lang})`;
+          option.setAttribute("data-name", voice.name);
+          voiceSelect.appendChild(option);
+        });
+      }
+
+      // تحديث الأصوات عند التحميل (للمتصفحات المختلفة)
+      populateVoices();
+      if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = populateVoices;
+      }
+
+      const getRandomNumber = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min);
+      };
+      let rnd = getRandomNumber(0, 3);
+      let list = ["Speak more", "Start talking", "Magic text"];
+      textInput.value = list[rnd];
+      // 3. وظيفة النطق الأساسية
+      function speak() {
+        if (synth.speaking) {
+          synth.cancel();
+        } // إيقاف أي نطق حالي قبل البدء
+
+        if (textInput.value !== "") {
+          const utterThis = new SpeechSynthesisUtterance(textInput.value);
+
+          // تطبيق الصوت المختار
+          const selectedVoiceName =
+            voiceSelect.selectedOptions[0].getAttribute("data-name");
+          utterThis.voice = voices.find((v) => v.name === selectedVoiceName);
+
+          // تطبيق الإعدادات (الحدة والسرعة)
+          utterThis.pitch = pitch.value;
+          utterThis.rate = rate.value;
+          utterThis.volume = vol.value;
+          if (
+            //utterThis.text.indexOf(list)
+            list.some((key) => utterThis.text.includes(key))
+          ) {
+            utterThis.volume = 0.5;
+            textInput.value = "";
+            textInput.focus();
+            start();
+           
+          } else {
+            utterThis.volume = vol.value;
+          }
+
+          synth.speak(utterThis);
+        }
+      }
+
+      // make animation to the slider
+
+      function clearit() {
+        //recognition.cancel();
+        textInput.value = "";
+        rnd = getRandomNumber(0, 3);
+        list = ["Speak more", "Start talking", "Magic text"];
+        textInput.value = list[rnd];
+      }
+    </script>
+
+    <script>
+      const ranges = document.querySelectorAll('input[type="range"]');
+
+      ranges.forEach((range) => {
+        range.addEventListener("input", (event) => {
+          //console.log("New value:", event.target.value);
+          leg.innerHTML = `${range.name} : ${event.target.value}`;
+        });
+      });
+    </script>
+  </body>
+</html>

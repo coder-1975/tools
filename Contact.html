@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CONTACT</title>
+  <meta name="description" content="javascript">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=neon|outline|emboss|shadow-multiple|Audiowide/Trirong">
+  <link rel="stylesheet" href="style.css">
+  <style media="screen">
+    #logo:after {
+      content: '\0188';
+      font-size: 80px;
+      z-index: 111;
+    }
+    h3#logo:hover{
+      transform: rotate(360deg) !important;
+      color: rgb(40, 125, 57);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="header">
+    <h3 id="logo"></h3>
+    <a href="#" title="Home.html">HOME</a>
+    <a href="#" title="About.html">ABOUT</a>
+    <a href="#" title="Contact.html">CONTACT</a>
+  </div>
+  <div id="side-right">
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+  </div>
+  <div id="side-left">
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+    In this example a is greater than b, so the first condition is not true,
+    also the elif condition is not true, so we go to the else condition and
+    print to screen that "a is greater than b".
+  </div>
+  <div id="main">
+    <h1 id="demo"></h1>
+    <div>
+      <img src="boster.jpg" class="boster" alt="boster 2024" />
+      <p>
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+      </p>
+    </div>
+    <div>
+      <img src="boster.jpg" class="boster" alt="boster 2024" />
+      <p>
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+        We can do it to help in index page
+      </p>
+    </div>
+  </div>
+
+  <div id="footer">
+    <a>HOME</a> <a>ABOUT</a> <a>CONTACT</a>
+  </div>
+  <script type="text/javascript">
+    'use strict';
+    var demo = document.getElementById('demo');
+    function sound() {
+      demo.innerHTML = this.bark;
+    }
+    const ada = {
+      name: 'Ada',
+      breed: 'Bali Dog',
+      bark: 'HOME'
+    }
+
+    function Page(title, style, content) {
+      this.title = title;
+      this.style = style;
+      this.content = content;
+    }
+
+    Page.prototype.edit = function () {
+      demo.innerHTML = this.title;
+    }
+    var a = document.querySelectorAll("a");
+    for (var i = 0; i < a.length; i++) {
+      let link = a[i];
+      if (link.innerHTML == 'HOME') {
+        link.addEventListener('click', () => {
+          //link.href="Home.html";
+          link.href = "index.html";
+        });
+        link.addEventListener('mouseover', () => {
+          let home = new Page('HOME', 'dark', 'WELCOME HOME');
+          home.edit();
+        });
+      } else if (link.innerHTML == 'ABOUT') {
+        link.addEventListener('click', () => {
+          link.href = "About.html";
+        });
+        link.addEventListener('mouseover', () => {
+          let about = new Page('ABOUT', 'dark', 'WELCOME ABOUT');
+          about.edit();
+        });
+      } else if (link.innerHTML == 'CONTACT') {
+        link.addEventListener('click', () => {
+          link.href = "Contact.html";
+        });
+        link.addEventListener('mouseover', () => {
+          let contact = new Page('CONTACT', 'dark', 'WELCOME CONTACT');
+          contact.edit();
+        });
+      }
+    }
+
+    setInterval(() => {
+      demo.style.letterSpacing = '-1px';
+    }, 1000);
+    setInterval(() => {
+      demo.style.letterSpacing = '3px';
+    }, 2000);
+  </script>
+</body>
+
+</html>
