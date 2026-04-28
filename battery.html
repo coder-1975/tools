@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Battery</title>
+    <style>
+       * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+          }
+      body {
+            width:400px;
+          height:400px;
+          position: absolute;
+          top:50%;
+          left:50%;
+          background:#123;
+          transform: translate(-50%, -50%);
+          font-family: sans-serif;
+      }
+    .battery {
+          display: flex;
+          align-items: center;
+          color:#452;
+          margin-top:-30px;
+          transform:rotate(-90deg);
+          transition:.7s;
+    }
+    #container{
+      margin-top:100px;
+      border-radius: 50%;
+      width:210px;
+      height:200px;
+      border:2px solid black;
+      box-shadow:2px 3px 4px 5px black;
+      background:radial-gradient(rgba(209, 219, 228, 0.3),transparent, rgba(20, 20, 20, 0.4),transparent,rgba(177, 172, 177, 0.3),transparent,transparent,rgba(178, 204, 201, 0.4));
+     }
+    /* Battery main Container */
+    .main_container {
+        position: relative;
+        background:linear-gradient(#fff,#999,#899,#999,#399,#111) ;
+        width: 200px;/*300*/
+        height: 100px;
+        padding: 4px;
+        border-radius: 15px;
+        filter:convert(.5);
+        box-shadow:-2px 3px 4px 6px black;
+    }
+    .right_bar {
+      width: 10px;
+      height: 35px;
+      border-radius: 15px;
+      background:linear-gradient(#799,#899,#399,#111) ;
+      margin-left: 1px;
+      filter:convert(.5);
+      box-shadow:-2px 0px 0px 1px black;
+      }
+      /* main charging bar  */
+    .main_container > .charging_bar {
+      position: relative;
+      background:linear-gradient(#999,#899,#799,#899,#225,#999,#114) ;
+      border-radius: 15px;
+      width: 0;
+      height: 100%;
+      z-index: 9;
+      border-right:1px solid #799;
+      animation: animate 8s linear;
+      filter:convert();
+      filter:brightness(.9);
+    }
+      /* the charging animation from the left */
+    @keyframes animate {
+      0% {
+        width: 0;
+      }
+      10%{
+        width:30px;
+      }
+      15%{
+        width:30px;
+      }
+      25%{
+        width:50px;
+      }
+      50%{
+        width:100px;
+      }
+      80%{
+        width:150px;
+      }
+      90%{
+        width:170px;
+      }
+    }
+    /* Charging information  such as battery % and charging Icon */
+    .main_container > .charging_info {
+      position: absolute;
+      content: "";
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      font-size: 40px;
+      animation:animate2 8s linear;
+      text-shadow:-1px 1px 1px #100;
+      width: 100%;
+      color:silver;
+    }
+     /* the charging animation from the left */
+    @keyframes animate2 {
+      0% {
+        color:#456;
+      }
+      25%{
+        color:#799;
+      }
+      50%{
+        color:rgb(134, 172, 172);
+      }
+      80%{
+        color:rgb(196, 218, 218);
+      }
+    }
+    /* Charging Icon */
+    .charging_info > img {
+      width: 35%;
+      display: none;
+    }
+    /* Other information such as discharging time */
+    .other_info {
+      position: absolute;
+      inset: 12px;
+      z-index: 10;
+      display: none;
+      color:#123;
+      font-weight: bold;
+    }
+    .discharging_time {
+      color:#123;
+      font-weight: bold;
+    }
+    
+  
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="battery">
+        <div class="main_container">
+          <!--  charging information  -->
+          <div class="charging_info">
+            <p class="battery_level"></p>
+            <img class="charging_icon" src="https://i.ibb.co/Zhdprs7/spark.png" alt="spark" />
+          </div>
+          <!--  Charging bar  -->
+        <div class="charging_bar"></div>
+        <!--  Charging other info  -->
+        <div class="other_info">
+          <p>Discharging : <span class="discharging_time"></span></p>
+        </div>
+      </div>
+      <div class="right_bar"></div>
+    </div>
+</div>
+<script>
+
+        // all the containers we need to update the battery information
+        const batterybox = document.querySelector(".battery");
+        const chargingIcon = document.querySelector(".charging_icon");
+        const batteryLevel = document.querySelector(".battery_level");
+        const chargingBar = document.querySelector(".charging_bar");
+        const dischargingTime = document.querySelector(".discharging_time");
+        const otherInfo = document.querySelector(".other_info");
+        // Getting battery it returns a propmise
+        navigator.getBattery().then((battery) => {
+          /* Update all the battery information which is a combination of multiple functions */
+          function updateAllBatteryInfo() {
+            updateChargeInfo();
+            updateLevelInfo();
+            updateDischargingInfo();
+          }
+          //   Running as the promise returns battery
+          updateAllBatteryInfo();
+          //  Event Listener, when the charging status changes
+          //  it checks that does your device is plugged in or not
+          battery.addEventListener("chargingchange", function () {
+            updateAllBatteryInfo();
+          });
+          //  Event Listener, when the Battery Level Changes
+          battery.addEventListener("levelchange", function () {
+            updateAllBatteryInfo();
+          });
+          //  Event Listener, when the discharging Time Change
+          //  it checks that does your device is plugged in or not
+          battery.addEventListener("dischargingtimechange", function () {
+            updateAllBatteryInfo();
+          });
+          //   Updating the battery Level container and the charging bar width
+          function updateLevelInfo() {
+            batteryLevel.textContent = `${parseInt(battery.level * 100)}%`;
+            chargingBar.style.width = `${parseInt(battery.level * 100)}%`;
+            let thing = parseInt(battery.level * 100);
+            if(thing === 100){
+               batterybox.style.transform ='rotate(0deg)';
+               batterybox.style.marginTop ='50'+'px';
+            }else{
+               batterybox.style.marginTop ='-30'+'px';
+            }
+  
+          }
+          function updateChargeInfo() {
+ 
+            battery.charging
+              ? ((chargingBar.style.animationIterationCount = "infinite"),
+                (chargingIcon.style.display = "inline-flex"),
+                (otherInfo.style.display = "none"))
+              : ((chargingIcon.style.display = "none"),
+                (otherInfo.style.display = "inline-flex"),
+                (chargingBar.style.animationIterationCount = "initial"));
+          }
+          //   updating the Discharging Information
+          function updateDischargingInfo() {
+            const dischargeTime = parseInt(battery.dischargingTime / 60) ? true : false;
+            dischargeTime
+              ? ((dischargingTime.textContent = `${parseInt(
+                  battery.dischargingTime / 60
+                )} m`),
+                (otherInfo.style.display = "flex"))
+              : (otherInfo.style.display = "none");
+          }
+        });
+
+</script>
+  </body>
+</html>
