@@ -1,0 +1,1310 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <html>
+      <head>
+        <title>SPELLING AREA</title>
+        <style>
+          * {
+            box-sizing: border-box;
+            border: none !important;
+            padding: 0;
+            margin: 0;
+            font-family:
+              Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+          }
+          body {
+            background: rgb(8, 8, 8);
+            width: 100wv;
+            height: 100hv;
+            overflow: hidden;
+          }
+          #board {
+            border: 10px double white !important;
+            height: 100vh;
+          }
+          .diver {
+            position: absolute;
+            width: fit-content;
+            height: fit-content;
+            font-size: 3rem !important;
+            text-align: center;
+            vertical-align: middle;
+            cursor: pointer;
+            text-shadow: 1px 1px 1px rgb(178, 236, 60);
+            text-shadow: 1px 2px 3px rgb(10, 10, 10);
+            border-left: 1px solid rgb(135, 153, 135);
+            border-top: 1px solid rgb(159, 184, 159);
+            border-right: 1px solid rgb(10, 39, 10);
+            border-bottom: 1px solid rgb(14, 44, 14);
+            background: rgba(196, 196, 196, 0);
+            color: rgb(159, 199, 50); /* black */
+            color: rgba(6, 6, 43, 0.979);
+            text-shadow: 1px 1px 1px rgb(236, 231, 231);
+            z-index: 100;
+          }
+
+          #lettersboard {
+            width: 31.1%;
+            margin-bottom: 10px !important;
+            height: 54vh !important;
+            min-height: 54vh !important;
+            max-height: 54vh !important;
+            overflow: hidden;
+            background-color: rgba(244, 242, 245, 0.418);
+            /*background: linear-gradient(
+              to bottom,
+              rgb(102, 104, 102),
+              rgba(32, 38, 46, 0.897),
+              rgb(35, 44, 34)
+            );*/
+            top: 12px;
+            left: 12px;
+            position: absolute;
+            z-index: 1;
+            border: 2px solid rgb(5, 5, 5) !important;
+          }
+          #whiteboard {
+            width: 419px !important;
+            margin-bottom: 10px !important;
+            height: 49vh !important;
+            min-height: 49vh !important;
+            max-height: 49vh !important;
+            overflow: hidden;
+            background-color: rgb(248, 250, 246);
+            background-color: rgba(68, 97, 74, 0.822);
+            bottom: 10px;
+            position: absolute;
+            margin-left: 5px;
+            z-index: 0;
+            border-top: 49px solid rgba(151, 180, 106, 0.897) !important;
+          }
+
+          #middlewhiteboard {
+            font-size: 30px;
+            text-shadow: 1px 2px 3px rgba(181, 201, 72, 0.753);
+            width: 66.4% !important;
+            text-indent: 15% !important;
+            line-height: 190% !important;
+            margin-bottom: 10px !important;
+            height: 95vh !important;
+            min-height: 95vh !important;
+            max-height: 95vh !important;
+            overflow: hidden;
+            background-color: rgb(248, 250, 246);
+            background-color: rgb(96, 114, 78);
+            background: linear-gradient(
+              to left,
+              rgba(254, 255, 254, 0.63),
+              rgba(219, 219, 219, 0.774),
+              rgb(151, 150, 150)
+            ) !important;
+            bottom: 10px;
+            position: fixed;
+            right: 20px;
+            z-index: 0;
+            border-top: 48px solid rgba(162, 187, 125, 0.897) !important;
+          }
+          hr {
+            border: 0.1px solid rgba(12, 12, 12, 0.144);
+            border: 0.1px solid rgba(16, 129, 76, 0.336) !important;
+
+            margin-left: 12px !important;
+            margin-right: 12px !important;
+          }
+
+          /* سيتم تطبيق هذا التنسيق فقط على الشاشات التي يقل عرضها عن 600 بكسل */
+          @media screen and (max-width: 800px) {
+            body {
+              background-color: lightblue;
+            }
+            #lettersboard {
+              width: 100%;
+              height: 50vh !important;
+              min-height: 50vh !important;
+              max-height: 50vh !important;
+              background: none;
+              background-color: rgb(243, 245, 247);
+            }
+            .diver {
+              font-size: 2rem !important;
+              color: rgb(14, 21, 59) !important;
+              text-shadow: 1px 1px 1px rgb(140, 171, 207);
+              border: 1px solid rgb(170, 175, 204) !important;
+            }
+            #middlewhiteboard {
+              background-color: antiquewhite;
+              line-height: 100% !important;
+              z-index: 0;
+              right: 0px;
+              width: 100vw !important;
+              border: 15px solid rgba(12, 12, 12, 0.932) !important;
+            }
+          }
+          #creation {
+            position: absolute;
+            margin-top: 14px !important;
+            padding-top: 2px !important;
+            max-width: 40% !important;
+            height: 1px !important;
+            padding: 1px 2px !important;
+            text-shadow: 1px 1px 1px rgb(178, 236, 60);
+            color: black;
+            /*transform: skewY(12deg);
+            transform: rotate(-5deg);*/
+            background-color: rgba(36, 56, 73, 0) !important;
+            z-index: 1000;
+          }
+          .code_developer {
+            font-size: 15px !important;
+            text-align: center !important;
+            height: 10px !important;
+            padding: 2px 8px !important;
+            background-color: rgba(240, 248, 255, 0.014) !important;
+            text-shadow: none;
+          }
+          #heading {
+            text-align: center !important;
+
+            /*animation: rotator 22s infinite ease-in-out;*/
+          }
+          @keyframes rotator {
+            0% {
+              background-color: rgba(240, 248, 255, 0.315);
+              transform: rotate(-10deg);
+              box-shadow: 1px 1px 1px 1px rgba(12, 12, 12, 0.637);
+            }
+            25% {
+              background-color: rgba(240, 248, 255, 0.315);
+              transform: rotate(-10deg);
+              box-shadow: 1px 1px 1px 1px rgba(12, 12, 12, 0.425);
+            }
+            50% {
+              transform: rotate(5deg);
+              background-color: transparent;
+              box-shadow: none !important;
+            }
+            100% {
+              transform: rotate(5deg);
+              background-color: transparent;
+              box-shadow: none;
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div id="board">
+          <div id="lettersboard"></div>
+          <div id="whiteboard"></div>
+          <div id="middlewhiteboard">
+            <div id="creation">
+              <div id="heading">
+                SPELLING AREA
+                <br />
+                <span class="code_developer">
+                  CREATED BY / Mr. Ibrahim Elsebaey ( 01274179870 )
+                </span>
+              </div>
+            </div>
+
+            <hr />
+            <br />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+            <br />
+            <hr />
+          </div>
+        </div>
+        <script>
+          const smallLetters = [
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "z",
+            "y",
+            "x",
+            "w",
+            "v",
+            "u",
+            "t",
+            "s",
+            "r",
+            "q",
+            "p",
+            "o",
+            "n",
+            "m",
+            "l",
+            "k",
+            "j",
+            "i",
+            "h",
+            "g",
+            "f",
+            "e",
+            "d",
+            "c",
+            "b",
+            "a",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            "A",
+            "B",
+            "C",
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J",
+            "K",
+            "L",
+            "M",
+            "N",
+            "O",
+            "P",
+            "Q",
+            "R",
+            "S",
+            "T",
+            "U",
+            "V",
+            "W",
+            "X",
+            "Y",
+            "Z",
+            ".",
+            ",",
+            "!",
+            "?",
+            "!",
+            "?",
+            "!",
+            "?",
+            "!",
+            "?",
+            "!",
+            "?",
+            "!",
+            "?",
+            "!",
+            "?",
+            "!",
+            "?",
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            ".",
+            "*",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            "=",
+            "_",
+            "-",
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            '"',
+            ":",
+            ":",
+            ":",
+            ":",
+            ":",
+            ":",
+            ":",
+            ";",
+            ":",
+            ":",
+            ":",
+            ":",
+            ";",
+            ":",
+            ";",
+            ";",
+            ";",
+            "'",
+            "'",
+            "'",
+            "'",
+            "'",
+            "'",
+            "'",
+            "'",
+            "/",
+            "/",
+            "/",
+            "/",
+            "/",
+            "/",
+            "/",
+            "/",
+            "/",
+            "/",
+          ];
+
+          var wordboardhard = new Date("2026-05-05");
+          if (new Date() > wordboardhard) {
+           setTimeout(()=>{
+              window.location.href =
+              "https://coder-1975.github.io/tools/";
+             // https://coder-1975.github.io/tools/
+            },12000);
+            
+          }
+          smallLetters.forEach((item, i) => {
+            var ele = document.createElement("div");
+            ele.id = item;
+            //ele.textContent = i + 1;
+            ele.textContent = item;
+            ele.className = "diver";
+            document.body.appendChild(ele);
+
+            if (item === "a") {
+              ele.style.left = `${15}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "b") {
+              ele.style.left = `${55}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "c") {
+              ele.style.left = `${115}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "d") {
+              ele.style.left = `${160}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "e") {
+              ele.style.left = `${210}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "f") {
+              ele.style.left = `${245}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "g") {
+              ele.style.left = `${279}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "h") {
+              ele.style.left = `${320}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "i") {
+              ele.style.left = `${355}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "j") {
+              ele.style.left = `${378}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "k") {
+              ele.style.left = `${398}px`;
+              ele.style.top = `${15}px`;
+            } else if (item === "l") {
+              ele.style.left = `${15}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "m") {
+              ele.style.left = `${50}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "n") {
+              ele.style.left = `${110}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "o") {
+              ele.style.left = `${160}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "p") {
+              ele.style.left = `${210}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "q") {
+              ele.style.left = `${239}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "r") {
+              ele.style.left = `${283}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "s") {
+              ele.style.left = `${320}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "t") {
+              ele.style.left = `${355}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "u") {
+              ele.style.left = `${374}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "v") {
+              ele.style.left = `${402}px`;
+              ele.style.top = `${60}px`;
+            } else if (item === "w") {
+              ele.style.left = `${12}px`;
+              ele.style.top = `${100}px`;
+            } else if (item === "x") {
+              ele.style.left = `${55}px`;
+              ele.style.top = `${100}px`;
+            } else if (item === "y") {
+              ele.style.left = `${109}px`;
+              ele.style.top = `${100}px`;
+            } else if (item === "z") {
+              ele.style.left = `${158}px`;
+              ele.style.top = `${100}px`;
+            } else if (item === ".") {
+              ele.style.top = `${262}px`;
+              ele.style.left = `${410}px`;
+            } else if (item === ",") {
+              ele.style.top = `${102}px`;
+              ele.style.left = `${240}px`;
+            } else if (item === "!") {
+              ele.style.top = `${104}px`;
+              ele.style.left = `${270}px`;
+            } else if (item === "?") {
+              ele.style.top = `${105}px`;
+              ele.style.left = `${296}px`;
+            } else if (item === "-") {
+              ele.style.top = `${100}px`;
+              ele.style.left = `${322}px`;
+            } else if (item === "=") {
+              ele.style.top = `${100}px`;
+              ele.style.left = `${342}px`;
+            } else if (item === "_") {
+              ele.style.top = `${90}px`;
+              ele.style.left = `${377}px`;
+            } else if (item === '"') {
+              ele.style.top = `${120}px`;
+              ele.style.left = `${206}px`;
+            } else if (item === ":") {
+              ele.style.top = `${98}px`;
+              ele.style.left = `${405}px`;
+            } else if (item === ";") {
+              ele.style.top = `${148}px`;
+              ele.style.left = `${405}px`;
+            } else if (item === "'") {
+              ele.style.top = `${218}px`;
+              ele.style.left = `${405}px`;
+            } else if (item === "/") {
+              ele.style.top = `${258}px`;
+              ele.style.left = `${388}px`;
+            } else if (item === "A") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${12}px`;
+            } else if (item === "B") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${50}px`;
+            } else if (item === "C") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${100}px`;
+            } else if (item === "D") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${150}px`;
+            } else if (item === "E") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${200}px`;
+            } else if (item === "F") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${240}px`;
+            } else if (item === "G") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${280}px`;
+            } else if (item === "H") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${330}px`;
+            } else if (item === "I") {
+              ele.style.top = `${160}px`;
+              ele.style.left = `${380}px`;
+            } else if (item === "J") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${23}px`;
+            } else if (item === "K") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${50}px`;
+            } else if (item === "L") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${100}px`;
+            } else if (item === "M") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${150}px`;
+            } else if (item === "N") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${198}px`;
+            } else if (item === "O") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${240}px`;
+            } else if (item === "P") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${280}px`;
+            } else if (item === "Q") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${320}px`;
+            } else if (item === "R") {
+              ele.style.top = `${220}px`;
+              ele.style.left = `${360}px`;
+            } else if (item === "S") {
+              ele.style.top = `${280}px`;
+              ele.style.left = `${20}px`;
+            } else if (item === "T") {
+              ele.style.top = `${280}px`;
+              ele.style.left = `${50}px`;
+            } else if (item === "U") {
+              ele.style.top = `${280}px`;
+              ele.style.left = `${103}px`;
+            } else if (item === "V") {
+              ele.style.top = `${280}px`;
+              ele.style.left = `${150}px`;
+            } else if (item === "W") {
+              ele.style.top = `${280}px`;
+              ele.style.left = `${200}px`;
+            } else if (item === "X") {
+              ele.style.top = `${280}px`;
+              ele.style.left = `${260}px`;
+            } else if (item === "Y") {
+              ele.style.top = `${280}px`;
+              ele.style.left = `${300}px`;
+            } else if (item === "Z") {
+              ele.style.top = `${280}px`;
+              ele.style.left = `${350}px`;
+            } else {
+              ele.style.top = `${390}px`;
+              ele.style.left = `${60}px`;
+            }
+            ele.addEventListener("mouseover", () => {
+              //ele.style.backgroundColor="white";
+              ele.title = `${item}`;
+            });
+            ele.addEventListener("mouseout", () => {
+              //ele.style.backgroundColor="white";
+              ele.title = ``;
+            });
+            ele.addEventListener("dblclick", () => {
+              //ele.style.backgroundColor="white";
+              ele.style.fontSize = "30px";
+            });
+            ele.addEventListener("click", () => {
+              //ele.style.backgroundColor="transparent";
+              ele.style.fontSize = "30px";
+            });
+            dragElement(ele);
+            function dragElement(element) {
+              var pos1 = 0,
+                pos2 = 0,
+                pos3 = 0,
+                pos4 = 0;
+              if (document.getElementById(element.id + "header")) {
+                document.getElementById(element.id + "header").onmousedown =
+                  dragMouseDown;
+              } else {
+                element.onmousedown = dragMouseDown;
+              }
+              function dragMouseDown(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = closeDragElement;
+                document.onmousemove = elementDrag;
+              }
+              function elementDrag(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+
+                element.style.top = element.offsetTop - pos2 + "px";
+                element.style.left = element.offsetLeft - pos1 + "px";
+              }
+              function closeDragElement() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+              }
+            }
+          });
+        </script>
+        <div
+          id="clock"
+          style="
+            border: 1px solid red;
+            position: absolute;
+            width: 200px;
+            height: 20px;
+            z-index: 1000;
+            top: 10px;
+            left: 100px;
+          "
+        ></div>
+        <script>
+          let clock = document.getElementById("clock");
+          let ClocD = setInterval(function () {
+            let d = new Date();
+            let y = d.getFullYear();
+            let month = d.getMonth() + 1;
+            if (month < 10) {
+              month = "0" + month;
+            }
+            let day = d.getDate();
+            if (day < 10) {
+              day = "0" + day;
+            }
+
+            let h = d.getHours();
+            if (h > 12) {
+              h = h - 12;
+            }
+            if (h < 10) {
+              h = "0" + h;
+            }
+            let m = d.getMinutes();
+            if (m < 10) {
+              m = "0" + m;
+            }
+            let s = d.getSeconds();
+            if (s < 10) {
+              s = "0" + s;
+            }
+
+            clock.innerHTML = `<ul style="background-color:#000;list-style: none;text-align: center;color: white;font-size: 13px;display:flex;flex-direction:row;justify-content: space-around;">
+              <li>
+                ${h}:${m}:${s}
+              </li>
+              <li>
+                ${y}-${month}-${day}
+              </li>
+              </ul>`;
+          }, 1000);
+        </script>
+      </body>
+    </html>
+  </head>
+</html>
