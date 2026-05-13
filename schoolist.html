@@ -52,6 +52,16 @@
       margin: 10px !important;
       cursor: pointer;
     }
+    .senders{
+      padding: 3px 0 !important;
+      margin: 10px 0 !important;
+    }
+    .numberInputs{
+      width:190px !important;
+      max-width: 190px !important;
+      min-width: 190px !important;
+      color:#cccccc;
+    }
 
     textarea {
 
@@ -238,35 +248,9 @@
         <input type="checkbox" id="forevening" />
       </div>
 
-      <div class="p-2 bg-danger" id="sends">
-        <!--
-  <div class="senders">
-  <span class="relatedToInputs">1</span>
-  <input  placeholder="type number..." />
-  <button class="bg-danger border border-light border-2 fw-bold text-light p-2">send</button>
-  </div>
-
-
-
-   <div class="senders">
-   
-  <span class="relatedToInputs">1</span>
-  <input  placeholder="type number..." class="numberInputs" />
-  <button class="bg-danger border border-light border-2 fw-bold text-light p-2 numberBtns">send</button>
- 
-</div>
-  -->
-
-
-
-
-      </div>
+      <div class="p-2 bg-danger" id="sends"></div>
     </div>
-
   </div>
-
-
-
 
 
   <h6 class="fs-5 p-1  border-secondary text-secondary fixed-bottom m-auto text-center">تمت البرمجة بواسطة ابراهيم
@@ -399,6 +383,8 @@
         } else {
           msg = "السلام عليكم";
         }
+        
+          
         schoolCheckers[i].checked = true;
         if ( schoolCheckers[i].checked) {
         // Action if checked
@@ -409,11 +395,16 @@
         ///////////////////
         allSchools.innerText = schools.length - tasksCount;
       }
+      
+
+
+        
         let sendersLinks = document.createElement("a");
         sendersLinks.innerText = `${schoolsWMembers[i]}|WHATS`;
         sendersLinks.target = "_blank";
         sendersLinks.href = `https://api.whatsapp.com/send/?phone=${sendersInputs.value}&text=${msg}&type=phone_number&app_absent=0`;
         senders.appendChild(sendersLinks);
+       
         sendersBtns.remove();
         sendersInputs.remove();
         sendersSpans.remove();
@@ -435,6 +426,7 @@
       }
     });
 
+   
     schoolCheckers.forEach((item, index) => {
       if (item.checked) {
         // Action if checked
@@ -444,6 +436,9 @@
       tasksCount = checks;
       counter.textContent = tasksCount;
     });
+
+
+
 
     schoolCheckers.forEach((item, index) => {
       item.addEventListener("click", () => {
