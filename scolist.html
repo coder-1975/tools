@@ -1,1 +1,542 @@
 
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+
+  <title>
+ SEND MESSAGES TO SCHOOLS
+  </title>
+</head>
+
+<body class="bg-dark">
+  <style>
+    * {
+      ::-webkit-scrollbar {
+        display: none;
+      }
+
+      padding:0;
+      margin:0;
+    }
+
+    input[type="checkbox"] {
+      visibility: hidden;
+      display: none;
+    }
+
+    #sco {
+      max-height: 80px !important;
+      min-height: 83px !important;
+      height: 80px !important;
+      background: #00000000 !important;
+      overflow-y: scroll;
+      cursor: pointer;
+
+    }
+
+    #sends {
+      max-height: 120px !important;
+      min-height: 120px !important;
+      height: 120px !important;
+      background: #00000000 !important;
+      overflow-y: scroll;
+      cursor: pointer;
+
+    }
+
+    input[type="text"] {
+      color: gold !important;
+      background: #222222 !important;
+      font-size: 20px !important;
+      padding: 10px !important;
+      margin: 10px !important;
+      cursor: pointer;
+    }
+
+    .senders {
+      padding: 3px 0 !important;
+      margin: 10px 0 !important;
+      margin-bottom: 15px !important;
+    }
+
+    .numberInputs {
+      width: 190px !important;
+      max-width: 190px !important;
+      min-width: 190px !important;
+      color: #cccccc;
+    }
+
+    textarea {
+
+      font-size: 12px !important;
+      padding: 1px !important;
+      margin: 1px !important;
+      width: 90% !important;
+      max-width: 90% !important;
+      min-width: 90% !important;
+      visibility: hidden;
+      display: none;
+      max-height: 0% !important;
+      min-height: 0% !important;
+      height: 0% !important;
+    }
+
+    .spaniola {
+      padding: 1px 18px;
+      margin: 10px 0;
+      font-size: 32px;
+      border: 1px solid grey;
+      background: #000 !important;
+       margin: 1px 0 !important;
+    }
+
+    .form-control {
+      padding: 2px !important;
+      margin: 2px 0 !important;
+    }
+
+    .senders {
+      background-color: #000;
+
+    }
+
+    .relatedToInputs {
+      padding: 2px 12px;
+      border: 1px solid rgb(241, 237, 237);
+      margin-right: 2px;
+      background-color: #000;
+      color: aliceblue;
+    }
+
+    a {
+      text-decoration: none !important;
+      background-color: antiquewhite !important;
+      color: #000 !important;
+      font-weight: bold !important;
+      font-size: 30px !important;
+      padding: 3px !important;
+      margin: 2px !important;
+      line-height: 80px;
+    }
+  </style>
+
+
+  <div class="container-fluid bg-dark text-light h-75">
+    <div class="bg-light fixed-top ">
+      <h1 class="text-danger w-50 m-auto bg-light text-center p-2 border border-5 border-dark pb-3">
+        <span id="startall">يجب ابلاغ</span>
+        <span id="allSchools"></span>
+        <span id="endall">مدرسة</span>
+      </h1>
+    </div>
+    <div class="mt-5 pt-5">
+      <h6 class="text-light w-50 fs-1 m-auto bg-success text-center p-1 border border-2 border-light mb-3">
+
+        <span class="text-light fs-1 m-auto bg-dark text-center p-3 border border-5 border-light mb-5 ps-5 pe-5"
+          id="counter">
+          0
+        </span>
+
+      </h6>
+    </div>
+
+    <div class="container bg-dark text-light m-auto w-100 fs-3" id="sco">
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class="form-control bg-dark text-light m-auto d-flex justify-content-center">
+        <input type="checkbox" class="fs-1 w-20 h-20 p-4" />
+        <input type="text" value="" class="w-75 text-end ms-3 text-success" />
+      </div>
+      <div class=" bg-dark text-light m-auto d-flex justify-content-center p-5">
+
+      </div>
+      </di>
+
+    </div>
+
+
+
+
+    <div
+      class="d-flex-column  align-items-center fs-5 bg-light h-50 border border-1 p-1 border-secondary text-secondary fixed-bottom m-auto text-center">
+
+      <div class=" bg-dark text-light m-auto d-flex justify-content-center p-2 fs-5 ">
+        ارسال الرسالة الى ارقام التليفونات
+      </div>
+      <div class="bg-light mb-1">
+        <textarea id="morning" class="bg-secondary text-light fw-bold w-75 text-center">
+
+  السلام عليكم ورحمة الله 
+،
+امتحان الدمج الصباحي للصفين الأول والثاني الاعدادي
+
+</textarea>
+        <input type="checkbox" id="formorning" />
+      </div>
+      <div class="bg-light">
+        <textarea id="evening" class=" bg-secondary text-dark fw-bold w-75 text-center">
+السلام عليكم ورحمة الله
+، 
+امتحان الدمج المسائي للصفين الأول والثاني الاعدادي
+
+</textarea>
+        <input type="checkbox" id="forevening" />
+      </div>
+
+      <div class="p-2 bg-danger" id="sends"></div>
+    </div>
+  </div>
+
+
+  <h6 class="fs-5 p-1  border-secondary text-secondary fixed-bottom m-auto text-center">تمت البرمجة بواسطة ابراهيم
+    السباعي</h6>
+  </div>
+
+  </div>
+
+
+  <script>
+    let msg = "";
+    let tasksCount = 0;
+    let allSchools = document.getElementById("allSchools");
+
+    const schools =
+      [
+        "الملقة ع",
+        "زهرة ع",
+        "شركة عواد ع",
+        "مرجان ع",
+        "محمد سعد عبد الواحد ع",
+        "ق لوقين ع",
+        "عبدالقادر خليف ع",
+        "ق ابوقير ع",
+        "م ق ابوقير ع",
+        "الروضة ع",
+        "الشعيرة ع",
+        "زكي الابراشي ع",
+        "جاب الله ع",
+        "حوض 7 ع",
+        "الطرح ع",
+        "الربعمائة ع",
+        "ابوزيد خليفة ع",
+        "الطاهر الصافي ع",
+        "معتوق ع",
+        "البسلقون ع"
+      ];
+
+    const schoolsWNumbers =
+      [
+        "201007551873",
+        "201011565154",
+        "201200113591",
+        "201004220069",
+        "201222560932",
+        "201284422080",
+        "201097369837",
+        "201097118912",
+        "201278085360",
+        "201000809209",
+        "201220989250",
+        "201020627475",
+        "201284442840",
+        "201280710193",
+        "201110437688",
+        "201275472899",
+        "201211951567",
+        "201151995586",
+        "201148270310",
+        "201117361162"
+      ];
+
+    const schoolsWMembers =
+      [
+        "Minah Gamal",
+        "Walaa Maghrabi",
+        "Heba Abdlreheem",
+        "Ahmed Morgan",
+        "Ghada Altemsaah",
+        "Eman Hasan",
+        "Asmaa Abdlqader",
+        "Shimaa Alhosiny",
+        "Maha Saber",
+        "Nagwa Aboelnagah",
+        "Tareq Alshaierah",
+        "Muhammad Alramy",
+        "Asmaa Shabaan",
+        "Hemadah Hood",
+        "Muhammad Tarah",
+        "Shimaa Alrobamiah",
+        "Said Abozeed",
+        "Shaker Safey",
+        "Maher Matooq",
+        "Hamaad Baslquoon"
+      ];
+    function same(ar1, ar2) {
+      return ar1.some(item => ar2.includes(item));
+    }
+
+    allSchools.innerText = schools.length - tasksCount;
+    let sends = document.getElementById("sends");
+    const relatedToInputs = document.querySelectorAll('.relatedToInputs');
+    const schoolContainers = document.querySelectorAll('input[type="text"]');
+    let schoolCheckers = document.querySelectorAll('input[type="checkbox"]');
+    let startall = document.getElementById("startall");
+    let endall = document.getElementById("endall");
+    let counter = document.getElementById("counter");
+    let checks = 0;
+    const morningSchools = [
+      "الملقة ع",
+      "زهرة ع",
+      "شركة عواد ع",
+      "محمد سعد عبد الواحد ع",
+      "ق لوقين ع",
+      "عبدالقادر خليف ع",
+      "ق ابوقير ع",
+      "م ق ابوقير ع",
+      "الروضة ع",
+      "الشعيرة ع",
+      "جاب الله ع",
+      "حوض 7 ع",
+      "ابوزيد خليفة ع",
+      "البسلقون ع"
+    ];
+    const eveningSchools = [
+      //
+      "مرجان ع",
+      "زكي الابراشي ع",
+      "الطرح ع",
+      "الربعمائة ع",
+      "الطاهر الصافي ع",
+      "معتوق ع",
+    ];
+
+    schoolsWNumbers.forEach((n, i) => {
+      let numbersContainer = document.createElement("span");
+      numbersContainer.className = "spaniola";
+      schoolContainers[i].value = schools[i];
+      schoolContainers[i].parentNode.appendChild(numbersContainer);
+      numbersContainer.innerText = i + 1;
+      let senders = document.createElement("div");
+      senders.className = "senders";
+      sends.appendChild(senders);
+      let sendersInputs = document.createElement("input");
+      let sendersBtns = document.createElement("button");
+      let sendersSpans = document.createElement("span");
+      sendersBtns.innerText = "send";
+      sendersInputs.value = n;
+      sendersSpans.className = "relatedToInputs";
+      sendersSpans.innerText = i + 1;
+      sendersBtns.className = "bg-danger border border-light border-2 fw-bold text-light p-2 numberBtns";
+      sendersInputs.className = "numberInputs";
+      sendersInputs.placeholder = "TYPE NUMBER...";
+      senders.appendChild(sendersSpans);
+      senders.appendChild(sendersInputs);
+      senders.appendChild(sendersBtns);
+      /*sendersBtns.onclick = () => {*/      ///////////////////////////////////////// *******************
+
+      //alert(sendersInputs.value);
+      let check1Txt = document.getElementById("morning");
+      let check2Txt = document.getElementById("evening");
+      let check1 = document.getElementById("formorning");
+      let check2 = document.getElementById("forevening");
+
+      if (morningSchools.includes(schools[i])) {
+        msg = check1Txt.value;
+      } else if (eveningSchools.includes(schools[i])) {
+        msg = check2Txt.value;
+      } else {
+        msg = "السلام عليكم";
+      }
+
+
+
+
+
+
+
+      let sendersLinks = document.createElement("a");
+      sendersLinks.innerText = `${schoolsWMembers[i]}|WHATS`;
+      sendersLinks.target = "_blank";
+      sendersLinks.href = `https://api.whatsapp.com/send/?phone=${sendersInputs.value}&text=${msg}&type=phone_number&app_absent=0`;
+      senders.appendChild(sendersLinks);
+
+      sendersBtns.remove();
+      sendersInputs.remove();
+      sendersSpans.remove();
+      schoolCheckers[i].parentNode.remove();
+      sendersLinks.onclick = () => {
+        schoolCheckers[i].checked = true;
+        if (schoolCheckers[i].checked) {
+          // Action if checked
+          schoolContainers[i].style.color = "green";
+          checks++;
+          tasksCount = checks;
+          counter.textContent = tasksCount;
+          ///////////////////
+          allSchools.innerText = schools.length - tasksCount;
+        }
+        sendersLinks.parentNode.remove();//////////////////////////here
+      }
+      /*}*/
+    });
+
+    schoolContainers.forEach((item, index) => {
+      if (item.value == "undefined") {
+        item.parentNode.remove();
+      } else {
+        item.style.color = "lightgrey";
+        item.style.fontSize = "25px";
+        item.style.fontWeight = "bold";
+        item.style.display = "block";
+      }
+    });
+
+
+    schoolCheckers.forEach((item, index) => {
+      if (item.checked) {
+        // Action if checked
+        schoolContainers[index].style.color = "green";
+        checks++;
+      }
+      tasksCount = checks;
+      counter.textContent = tasksCount;
+    });
+
+
+
+
+    schoolCheckers.forEach((item, index) => {
+      item.addEventListener("click", () => {
+        if (item.checked) {
+          // Action if checked
+          schoolContainers[index].style.color = "green";
+          tasksCount += 1;
+          counter.textContent = tasksCount;
+          item.parentNode.remove();
+          allSchools.innerText = schools.length - tasksCount;
+          ///////////////////////////////////////
+          if (schools.length - tasksCount === 0) {
+            startall.innerText = "انهيت ابلاغ";
+            allSchools.style.color = "white";
+            endall.innerText = "المدارس";
+            allSchools.innerText = schools.length - tasksCount;
+          } else {
+            startall.innerText = "يجب ابلاغ";
+            allSchools.style.color = "red";
+            endall.innerText = "مدرسة";
+            allSchools.innerText = schools.length - tasksCount;
+          }
+          ///////////////////////////////////////////
+        } else {
+          // Action if not checked
+          schoolContainers[index].style.color = "red";
+          tasksCount -= 1;
+          counter.textContent = tasksCount;
+          allSchools.innerText = schools.length - tasksCount;
+
+          ///////////////////////////////////////
+          if (schools.length - tasksCount === 0) {
+            startall.innerText = "انهيت ابلاغ";
+            allSchools.style.color = "white";
+            endall.innerText = "المدارس";
+            allSchools.innerText = schools.length - tasksCount;
+          } else {
+            startall.innerText = "يجب ابلاغ";
+            allSchools.style.color = "red";
+            endall.innerText = "مدرسة";
+            allSchools.innerText = schools.length - tasksCount;
+          }
+          ///////////////////////////////////////////
+        }
+      });
+    });
+
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+</body>
+</body>
+
+</html>
